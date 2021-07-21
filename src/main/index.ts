@@ -1,13 +1,29 @@
-import { app, BrowserWindow, screen } from 'electron'
+import { app, BrowserWindow, screen, protocol } from 'electron'
 import { join } from 'path'
+import { initEvent, initHandler } from './event'
+// import { initialize } from '@electron/remote/main'
 
+declare global {
+  // eslint-disable-next-line @typescript-eslint/no-namespace
+  namespace NodeJS {
+    interface Global {
+      win: Electron.BrowserWindow
+    }
+  }
+}
+
+let win
 function createWindow() {
-  const win = new BrowserWindow({
-    width: 1200,
-    height: screen.getPrimaryDisplay().workAreaSize.height,
+  global.win = win = new BrowserWindow({
+    // width: 1200,
+    // height: screen.getPrimaryDisplay().workAreaSize.height,
+    width: 1000,
+    height: 800,
     webPreferences: {
       nodeIntegration: true,
-      preload: join(__dirname, 'preload.js')
+      enableRemoteModule: true,
+      preload: join(__dirname, '../../dist/main/preload.js'),
+      webSecurity: false
     }
   })
 
@@ -17,9 +33,19 @@ function createWindow() {
   } else {
     win.loadFile('dist/render/index.html')
   }
+
+  // 初始化进程之间事件监听
+  initEvent()
+  initHandler()
 }
 
-app.whenReady().then(createWindow)
+app.whenReady().then(() => {
+  createWindow()
+  protocol.registerFileProtocol('file', (request, callback) => {
+    const pathname = decodeURI(request.url.replace('file:///', ''))
+    callback(pathname)
+  })
+})
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {

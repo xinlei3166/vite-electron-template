@@ -9,6 +9,7 @@
     "build": "vue-tsc --noEmit && vite build",
     "serve": "vite preview",
     "clean": "rm -rf dist/main dist/render",
+    "watch": "tsc -w -p tsconfig.electron.json",
     "dev:electron": "cross-env NODE_ENV=development electron index.js",
     "build:electron-win": "tsc -p tsconfig.electron.json && electron-builder --win --x64",
     "build:electron-mac": "tsc -p tsconfig.electron.json && electron-builder --mac",
@@ -18,6 +19,7 @@
     "preinstall": "node ./scripts/check-yarn.js"
   },
   "dependencies": {
+    "@electron/remote": "^1.2.0",
     "ant-design-vue": "^2.1.6",
     "axios": "^0.21.1",
     "cos-js-sdk-v5": "^1.2.7",
@@ -68,10 +70,16 @@
     "appId": "electron-vue-demo",
     "productName": "electron-vue-demo",
     "mac": {
-      "target": ["dmg","zip"]
+      "target": [
+        "dmg",
+        "zip"
+      ]
     },
     "win": {
-      "target": ["nsis","zip"]
+      "target": [
+        "nsis",
+        "zip"
+      ]
     },
     "files": [
       "dist/main/**/*",
@@ -80,8 +88,8 @@
     "directories": {
       "output": "dist/release"
     },
-    "electronDownload":{
-      "mirror":"https://npm.taobao.org/mirrors/electron/"
+    "electronDownload": {
+      "mirror": "https://npm.taobao.org/mirrors/electron/"
     }
   },
   "gitHooks": {
