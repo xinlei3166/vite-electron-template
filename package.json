@@ -1,6 +1,6 @@
 {
-  "name": "electron-vue-demo",
-  "description": "electron-vue-demo",
+  "name": "vite-electron-template",
+  "description": "vite-electron-template",
   "author": "junxi",
   "version": "1.0.0",
   "main": "dist/main/index.js",
