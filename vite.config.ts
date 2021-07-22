@@ -4,17 +4,18 @@ import styleImport from 'vite-plugin-style-import'
 import path from 'path'
 import { injectHtml } from 'vite-plugin-html'
 
-const outDir = path.resolve(__dirname, 'dist/render')
-const renderDir = path.resolve(__dirname, 'src/render')
+const root = path.resolve(__dirname, 'src/render')
 const publicDir = path.resolve(__dirname, 'src/render/public')
+const outDir = path.resolve(__dirname, 'dist/render')
 
 // @ts-ignore
 export default ({ mode }) => {
-  // const env = loadEnv(mode, process.cwd())
+  const env = loadEnv(mode, process.cwd())
   // const base = env.VITE_APP_ENV === 'production' ? CDN_PATH : '/'
   return defineConfig({
-    publicDir,
+    root,
     base: './',
+    publicDir,
     plugins: [
       vue(),
       styleImport({
@@ -27,12 +28,12 @@ export default ({ mode }) => {
             }
           }
         ]
+      }),
+      injectHtml({
+        injectData: {
+          VITE_DEPLOY_ENV: env.VITE_DEPLOY_ENV
+        }
       })
-      // injectHtml({
-      //   injectData: {
-      //     VITE_DEPLOY_ENV: env.VITE_DEPLOY_ENV
-      //   }
-      // })
     ],
     css: {
       preprocessorOptions: {
@@ -50,7 +51,7 @@ export default ({ mode }) => {
     },
     resolve: {
       alias: {
-        '@': renderDir
+        '@': root
       }
     }
   })

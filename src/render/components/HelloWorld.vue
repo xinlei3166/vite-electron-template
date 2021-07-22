@@ -1,4 +1,5 @@
 <template>
+  <router-view />
   <h1>{{ msg }}</h1>
 
   <p>
@@ -42,7 +43,7 @@ export default defineComponent({
   props: {
     msg: {
       type: String,
-      required: true
+      default: 'Hello Vue 3 + TypeScript + Vite'
     }
   },
   setup: () => {

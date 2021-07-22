@@ -1,18 +1,34 @@
 import { RouteRecordRaw } from 'vue-router'
 
+const layout = () => import('@/components/HelloWorld.vue')
+
 const routes: RouteRecordRaw[] = [
   {
     path: '/',
-    name: 'home',
-    meta: {
-      title: '首页'
-    },
-    component: () => import('../components/HelloWorld.vue')
+    component: layout,
+    children: [
+      {
+        path: '',
+        name: 'home',
+        meta: {
+          title: '首页'
+        },
+        component: () => import('@/views/home/index.vue')
+      },
+      {
+        path: '/hello',
+        name: 'hello',
+        meta: {
+          title: 'hello'
+        },
+        component: () => import('@/views/hello/index.vue')
+      }
+    ]
+  },
+  {
+    path: '/:pathMatch(.*)*',
+    redirect: { name: 'home' }
   }
-  // {
-  //   path: '/:pathMatch(.*)*',
-  //   redirect: { name: '404' }
-  // }
 ]
 
 export default routes

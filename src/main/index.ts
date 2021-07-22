@@ -1,4 +1,4 @@
-import { app, BrowserWindow, screen, protocol } from 'electron'
+import { app, BrowserWindow, screen, globalShortcut } from 'electron'
 import { join } from 'path'
 import { initEvent, initHandler } from './event'
 // import { initialize } from '@electron/remote/main'
@@ -22,8 +22,8 @@ function createWindow() {
     webPreferences: {
       nodeIntegration: true,
       enableRemoteModule: true,
-      preload: join(__dirname, '../../dist/main/preload.js'),
-      webSecurity: false
+      preload: join(__dirname, 'preload.js'),
+      webSecurity: true
     }
   })
 
@@ -37,15 +37,17 @@ function createWindow() {
   // 初始化进程之间事件监听
   initEvent()
   initHandler()
+
+  // 禁用刷新和打开控制台
+  globalShortcut.register('CommandOrControl+Alt+I', () => {
+    return false
+  })
+  globalShortcut.register('CommandOrControl+R', () => {
+    return false
+  })
 }
 
-app.whenReady().then(() => {
-  createWindow()
-  protocol.registerFileProtocol('file', (request, callback) => {
-    const pathname = decodeURI(request.url.replace('file:///', ''))
-    callback(pathname)
-  })
-})
+app.whenReady().then(createWindow)
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {

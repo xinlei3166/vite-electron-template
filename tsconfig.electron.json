@@ -11,6 +11,7 @@
     "outDir": "dist/main"
   },
   "include": [
+    "src/main/preload.js",
     "src/main/**/*.ts",
     "src/main/**/*.d.ts"
   ]

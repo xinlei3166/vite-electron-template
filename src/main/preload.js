@@ -4,16 +4,16 @@ const sendChannels = ['toMain']
 const onChannels = ['fromMain']
 
 contextBridge.exposeInMainWorld('ipcRenderer', {
-  send(channel: string, ...args: any) {
+  send(channel, ...args) {
     // if (sendChannels.includes(channel)) {
     //   ipcRenderer.send(channel, ...args)
     // }
     ipcRenderer.send(channel, ...args)
   },
-  on(channel: string, listener: Function) {
+  on(channel, listener) {
     ipcRenderer.on(channel, (event, ...args) => listener(...args))
   },
-  invoke(channel: string, ...args: any) {
+  invoke(channel, ...args) {
     return ipcRenderer.invoke(channel, ...args)
   }
 })
