@@ -1,4 +1,4 @@
-# 1.0.0 (2023-04-23)
+# [1.0.0](https://github.com/xinlei3166/vite-electron-template/compare/3b9f8318043a9cd5c0694f438f25bee8569c83ed...v1.0.0) (2023-04-23)
 
 
 ### Features
