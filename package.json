@@ -3,6 +3,10 @@
   "description": "vite-electron-template",
   "author": "君惜",
   "version": "1.0.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/xinlei3166/vite-electron-template"
+  },
   "main": "dist/main/index.js",
   "scripts": {
     "preinstall": "npx only-allow pnpm",
