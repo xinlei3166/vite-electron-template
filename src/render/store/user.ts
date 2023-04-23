@@ -1,38 +1,33 @@
-import { Module, ActionContext } from 'vuex'
-import { RootState } from './index'
+import { defineStore } from 'pinia'
 
-export interface State {
+const storageKeyPrefix = import.meta.env.VITE_APP_STORAGE_KEY_PREFIX
+
+export interface UserState {
   userinfo: {
     name: string
     age: string
   }
 }
 
-const state = (): State => {
-  const userinfo = { name: '', age: 'male' }
-  return { userinfo }
-}
-
-const getters = {}
-
-const mutations = {
-  changeUserinfo(state: State, name: string) {
-    state.userinfo.name = name
+export const useUserStore = defineStore('user', {
+  state: (): UserState => ({ userinfo: { name: '', age: 'male' } }),
+  getters: {
+    Userinfo(state) {
+      return state.userinfo
+    }
+  },
+  actions: {
+    setUserinfo(name: string) {
+      this.userinfo.name = name
+    }
+  },
+  persist: {
+    enabled: true,
+    strategies: [
+      {
+        key: storageKeyPrefix + 'User',
+        storage: localStorage
+      }
+    ]
   }
-}
-
-const actions = {
-  setUserinfo(context: ActionContext<State, RootState>, name: string) {
-    context.commit('changeUserinfo', name)
-  }
-}
-
-const store: Module<State, RootState> = {
-  namespaced: true,
-  state,
-  getters,
-  mutations,
-  actions
-}
-
-export default store
+})

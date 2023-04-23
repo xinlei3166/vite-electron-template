@@ -1,12 +1,14 @@
 {
   "name": "vite-electron-template",
   "description": "vite-electron-template",
-  "author": "junxi",
+  "author": "君惜",
   "version": "1.0.0",
   "main": "dist/main/index.js",
   "scripts": {
-    "dev": "vite",
-    "build": "vue-tsc --noEmit && vite build",
+    "preinstall": "npx only-allow pnpm",
+    "prepare": "simple-git-hooks",
+    "dev": "vite --host",
+    "build": "vite build",
     "serve": "vite preview",
     "clean": "rm -rf dist/main dist/render",
     "dev:electron": "cross-env NODE_ENV=development electron index.js",
@@ -15,56 +17,64 @@
     "build:electron-mac": "yarn tsc:electron && electron-builder --mac",
     "build:win": "run-s clean build build:electron-win",
     "build:mac": "run-s clean build build:electron-mac",
-    "lint": "eslint --fix --ext .js,.jsx,.ts,.tsx,.vue",
-    "preinstall": "node ./scripts/check-yarn.js"
+    "lint": "eslint --fix --ext .js,.jsx,.ts,.tsx,.vue"
   },
   "dependencies": {
-    "@electron/remote": "^1.2.0",
-    "ant-design-vue": "^2.1.6",
-    "axios": "^0.21.1",
+    "@ant-design/icons-vue": "^6.1.0",
+    "@vueuse/components": "^10.0.2",
+    "@vueuse/core": "^10.0.2",
+    "animate.css": "^4.1.1",
+    "ant-design-vue": "^3.2.10",
+    "axios": "^0.27.2",
     "cos-js-sdk-v5": "^1.2.7",
-    "dayjs": "^1.10.4",
-    "js-audio-recorder": "^1.0.7",
-    "js-cookie": "^2.2.1",
-    "mitt": "^2.1.0",
-    "vue": "^3.0.11",
-    "vue-router": "^4.0.6",
-    "vuedraggable": "^4.0.1",
-    "vuex": "^4.0.0"
+    "dayjs": "^1.11.5",
+    "js-cookie": "^3.0.1",
+    "mitt": "^3.0.0",
+    "nanoid": "^4.0.0",
+    "nprogress": "^0.2.0",
+    "pinia": "^2.0.17",
+    "pinia-plugin-persist": "^1.0.0",
+    "qs": "^6.11.0",
+    "vue": "^3.2.37",
+    "vue-router": "^4.1.3",
+    "vuedraggable": "^4.0.1"
   },
   "devDependencies": {
-    "@types/js-cookie": "^2.2.6",
-    "@types/mockjs": "^1.0.3",
-    "@types/node": "^14.14.39",
-    "@types/qs": "^6.9.6",
-    "@typescript-eslint/eslint-plugin": "^4.17.0",
-    "@typescript-eslint/parser": "^4.17.0",
-    "@vitejs/plugin-vue": "^1.1.5",
-    "@vue/compiler-sfc": "^3.0.5",
-    "chalk": "^4.1.0",
+    "@types/js-cookie": "^3.0.2",
+    "@types/mockjs": "^1.0.6",
+    "@types/node": "^14.18.23",
+    "@types/nprogress": "^0.2.0",
+    "@types/qs": "^6.9.7",
+    "@typescript-eslint/eslint-plugin": "^4.33.0",
+    "@typescript-eslint/parser": "^4.33.0",
+    "@vitejs/plugin-vue": "^4.1.0",
+    "@vitejs/plugin-vue-jsx": "^3.0.0",
+    "@vue/compiler-sfc": "^3.2.37",
     "cross-env": "^7.0.3",
-    "electron": "^12.0.8",
-    "electron-builder": "^22.10.5",
-    "eslint": "^7.21.0",
-    "eslint-config-prettier": "^8.1.0",
-    "eslint-plugin-prettier": "^3.3.1",
-    "eslint-plugin-vue": "^7.7.0",
-    "less": "^4.1.1",
-    "less-loader": "^8.0.0",
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^3.4.1",
+    "eslint-plugin-vue": "^7.20.0",
+    "less": "^4.1.3",
+    "less-loader": "^8.1.1",
     "lint-staged": "^10.5.4",
     "mockjs": "^1.1.0",
     "npm-run-all": "^4.1.5",
-    "prettier": "^2.2.1",
-    "qs": "^6.10.1",
-    "remark": "^13.0.0",
-    "ts-node": "^9.1.1",
-    "typescript": "^4.2.3",
-    "vite": "^2.0.5",
-    "vite-plugin-html": "^2.0.3",
-    "vite-plugin-style-import": "^0.8.1",
-    "vue-eslint-parser": "^7.6.0",
-    "vue-tsc": "^0.1.4",
-    "yorkie": "^2.0.0"
+    "picocolors": "latest",
+    "prettier": "^2.7.1",
+    "simple-git-hooks": "latest",
+    "tsx": "latest",
+    "typescript": "^4.8.4",
+    "unplugin-auto-import": "^0.12.2",
+    "unplugin-vue-components": "^0.23.0",
+    "vite": "^4.3.0",
+    "vite-plugin-html": "^3.2.0",
+    "vite-plugin-style-import": "^2.0.0",
+    "vue-eslint-parser": "^7.11.0",
+    "electron": "^24.1.0",
+    "electron-builder": "^23.6.0",
+    "ts-node": "^10.9.1",
+    "@types/verror": "latest"
   },
   "build": {
     "appId": "electron-vue-demo",
@@ -92,17 +102,24 @@
       "mirror": "https://npm.taobao.org/mirrors/electron/"
     }
   },
-  "gitHooks": {
-    "pre-commit": "lint-staged",
-    "commit-msg": "node scripts/verify-commit.js"
+  "simple-git-hooks": {
+    "pre-commit": "pnpm exec lint-staged --concurrent false",
+    "commit-msg": "pnpm exec tsx scripts/verifyCommit.ts $1"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx,vue}": [
-      "eslint --fix",
-      "git add"
+      "eslint --fix"
     ]
   },
   "engines": {
-    "node": ">=12.0.0"
+    "node": ">=18.14.0"
+  },
+  "pnpm": {
+    "peerDependencyRules": {
+      "ignoreMissing": [
+        "webpack",
+        "umi"
+      ]
+    }
   }
 }

@@ -14,5 +14,6 @@
     "src/main/preload.js",
     "src/main/**/*.ts",
     "src/main/**/*.d.ts"
-  ]
+  ],
+  "exclude": ["node_modules"]
 }

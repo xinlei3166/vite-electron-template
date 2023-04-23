@@ -1,12 +1,15 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
-import { store, key } from './store'
+import { createPinia } from 'pinia'
+import piniaPersist from 'pinia-plugin-persist'
 import './styles/index.less'
 
 const app = createApp(App)
 
 app.use(router)
-app.use(store, key)
+const pinia = createPinia()
+pinia.use(piniaPersist)
+app.use(pinia)
 
 app.mount('#app')
