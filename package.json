@@ -3,6 +3,7 @@
   "description": "vite-electron-template",
   "author": "君惜",
   "version": "1.0.0",
+  "private": true,
   "repository": {
     "type": "git",
     "url": "https://github.com/xinlei3166/vite-electron-template"
