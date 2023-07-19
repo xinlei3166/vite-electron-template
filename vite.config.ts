@@ -1,9 +1,12 @@
 import { loadEnv, defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import jsx from '@vitejs/plugin-vue-jsx'
+import UnoCSS from 'unocss/vite'
 import { createStyleImportPlugin, AndDesignVueResolve } from 'vite-plugin-style-import'
 import { createHtmlPlugin } from 'vite-plugin-html'
 import AutoImport from 'unplugin-auto-import/vite'
+import Components from 'unplugin-vue-components/vite'
+import { AntDesignVueResolver } from 'unplugin-vue-components/resolvers'
 import path from 'path'
 
 const root = path.resolve(__dirname, 'src/render')
@@ -39,17 +42,25 @@ export default ({ mode, command }) => {
     plugins: [
       vue(),
       jsx(),
+      UnoCSS(),
       AutoImport({
         imports: ['vue', 'vue-router'],
         dts: false
       }),
+      Components({
+        resolvers: [
+          AntDesignVueResolver({
+            importStyle: false // css in js
+          })
+        ]
+      }),
       createHtmlPlugin({
-        // inject: {
-        //   data: {
-        //     title: 'title',
-        //     injectScript: `<script src="./inject.js"></script>`
-        //   }
-        // }
+        inject: {
+          data: {
+            // title: 'title',
+            // injectScript: `<script src="./inject.js"></script>`
+          }
+        }
       }),
       createStyleImportPlugin({
         resolves: [AndDesignVueResolve()]

@@ -1,10 +1,46 @@
 # vite-electron-template
-Vite4 + Vue3 + Electron24
+vite-electron-template
 
-## 安装electron
-`pnpm config set electron_mirror https://npm.taobao.org/mirrors/electron/`
+## Framework packages
+Vite4 + Vue3 + Electron24 + Pinia + Vue Router + TypeScript + Ant Design Vue + Unocss
 
-`pnpm install -D electron`
+## Package Manager
+pnpm
 
-## 安装依赖
-`pnpm install`
+## Quick start
+```
+git clone https://github.com/xinlei3166/vite-electron-template
+```
+
+## Project setup
+```
+pnpm install
+```
+
+### Install electron
+```
+pnpm config set electron_mirror https://npm.taobao.org/mirrors/electron/
+pnpm install -D electron
+```
+
+### Compiles and hot-reloads for development
+```
+pnpm dev
+pnpm dev:electron
+```
+
+### Compiles and minifies for production
+```
+pnpm build:win
+pnpm build:mac
+```
+
+### Run your tests
+```
+pnpm run test
+```
+
+### Lints and fixes files
+```
+pnpm run lint
+```

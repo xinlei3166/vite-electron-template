@@ -14,6 +14,7 @@ declare global {
 const isDev = process.env.NODE_ENV === 'development'
 let win: any
 function createWindow() {
+  // ;(global as any).win = win = new BrowserWindow({
   global.win = win = new BrowserWindow({
     // width: 1200,
     // height: screen.getPrimaryDisplay().workAreaSize.height,
