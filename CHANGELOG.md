@@ -1,3 +1,12 @@
+# [1.2.0](https://github.com/xinlei3166/vite-electron-template/compare/v1.1.0...v1.2.0) (2023-07-19)
+
+
+### Features
+
+* css to unocss ([1960de5](https://github.com/xinlei3166/vite-electron-template/commit/1960de5c7a96203a84be90b40093cfc5da02d04f))
+
+
+
 # [1.1.0](https://github.com/xinlei3166/vite-electron-template/compare/v1.0.0...v1.1.0) (2023-04-23)
 
 
