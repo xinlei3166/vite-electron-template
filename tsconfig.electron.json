@@ -13,8 +13,7 @@
   "include": [
     "src/main/preload.js",
     "src/main/**/*.ts",
-    "src/main/**/*.d.ts",
-    "src/render/shims-global.d.ts"
+    "src/main/**/*.d.ts"
   ],
   "exclude": ["node_modules"]
 }
