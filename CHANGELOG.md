@@ -1,3 +1,12 @@
+# [1.3.0](https://github.com/xinlei3166/vite-electron-template/compare/v1.2.0...v1.3.0) (2023-08-07)
+
+
+### Features
+
+* update unocss config and antd theme vars ([2f1a6e3](https://github.com/xinlei3166/vite-electron-template/commit/2f1a6e3e82921f9026a2a17ac1faea4dea6ecbc2))
+
+
+
 # [1.2.0](https://github.com/xinlei3166/vite-electron-template/compare/v1.1.0...v1.2.0) (2023-07-19)
 
 
