@@ -16,7 +16,7 @@ app.use(pinia)
 
 app.mount('#app')
 
-if (import.meta.env.MODE !== 'development') {
+if (import.meta.env.PROD) {
   app.config.errorHandler = (err, vm, info) => {
     console.group('vue_global_error')
     console.log('捕获到异常：', { err, vm, info })
