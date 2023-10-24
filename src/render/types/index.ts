@@ -1,5 +1,5 @@
 import type { Ref } from 'vue'
-import type { AxiosRequestConfig } from 'axios'
+import type { AxiosRequestConfig, InternalAxiosRequestConfig } from 'axios'
 
 export * from './requests'
 
@@ -15,10 +15,12 @@ export interface RequestOptions {
   blobOptions?: Record<string, any>
 }
 
-export interface Config extends AxiosRequestConfig {
+export interface RequestConfig {
   requestOptions?: RequestOptions
   [key: string]: any
 }
+export type Config = RequestConfig & AxiosRequestConfig
+export type InternalConfig = RequestConfig & InternalAxiosRequestConfig
 
 export interface Request {
   [key: string]: any

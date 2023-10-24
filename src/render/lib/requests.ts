@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { message } from 'ant-design-vue'
-import type { Config, RequestsConfig, Method } from '@/types'
+import type { Config, InternalConfig, RequestsConfig, Method } from '@/types'
 import { httpMsg } from '@/types/enums'
 import { getToken } from '@/utils'
 import qs from 'qs'
