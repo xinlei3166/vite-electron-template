@@ -57,6 +57,7 @@ module.exports = {
       }
     ],
     'vue/no-mutating-props': 0,
-    'vue/no-dupe-keys': 0
+    'vue/no-dupe-keys': 0,
+    'vue/multi-word-component-names': 0
   }
 }
