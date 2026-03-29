@@ -30,5 +30,6 @@ const response = function (options: Record<string, any> = {}) {
   }
 }
 
+const baseURL = import.meta.env.VITE_API_URL
 // 拦截ajax请求，配置mock的数据
-Mock.mock('/api/table/data', 'post', response)
+Mock.mock(`${baseURL}/table/data`, 'post', response)
