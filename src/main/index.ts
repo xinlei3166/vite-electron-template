@@ -3,7 +3,6 @@ import path from 'path'
 import { initEvent, initHandler } from './event'
 
 declare global {
-  // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace NodeJS {
     interface Global {
       win: Electron.BrowserWindow
