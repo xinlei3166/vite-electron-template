@@ -1,6 +1,7 @@
 import { message } from 'ant-design-vue'
-import router from '@/router'
+import type { Request } from '@/types'
 import { useRequests } from '@/lib'
+import router from '@/router'
 import { removeToken } from '@/utils'
 
 const errorHandler = (msg: string) => {
@@ -13,4 +14,10 @@ const errorHandler = (msg: string) => {
 }
 
 const baseURL = import.meta.env.VITE_API_URL
-export const requests = useRequests({ baseURL, errorHandler })
+
+// 刷新令牌
+const pureRequests = useRequests({ baseURL, errorHandler, noRefreshToken: true })
+export const refreshTokenApi = (data?: Request) =>
+  pureRequests.post('/user/refresh_token', { refresh_token: data?.refreshToken })
+
+export const requests = useRequests({ baseURL, errorHandler, refreshTokenApi })
