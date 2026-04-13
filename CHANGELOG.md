@@ -10,6 +10,7 @@
 - use tdesign-vue-next ([2997972](https://github.com/xinlei3166/vite-electron-template/commit/2997972b348611331f949826e97d872462c3bf1f))
 - VITE_OUTDIR. ([a46527d](https://github.com/xinlei3166/vite-electron-template/commit/a46527db747bf2e625c06c8acc4a26b0ba73887b))
 - 更新 package.json，添加格式化和 lint 配置，升级依赖版本 ([bd88bad](https://github.com/xinlei3166/vite-electron-template/commit/bd88bad4eee77d1ec0c7b721bc2a6fd670d5742d))
+- 更新版本号至 1.6.0，并修改 lint-staged 配置以避免未匹配模式的错误 ([38e4d53](https://github.com/xinlei3166/vite-electron-template/commit/38e4d5383119a1ef4ee8a5f2687250582260296b))
 - 添加 OX 格式化和 Lint 配置文件，替换 Prettier 和 ESLint ([54ff698](https://github.com/xinlei3166/vite-electron-template/commit/54ff698c64e9c6e878c8634d2158969e4396cddf))
 - 添加 Vue 插件支持并更新相关规则 ([61a31c2](https://github.com/xinlei3166/vite-electron-template/commit/61a31c21b0a1cd5fdf1a638b433697f3586ae05d))
 - 添加请求处理和文件导出功能，更新配置选项 ([124a86f](https://github.com/xinlei3166/vite-electron-template/commit/124a86f3471307163284b30cfc898852aff87922))
