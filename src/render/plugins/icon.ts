@@ -1,0 +1,30 @@
+import type { App } from 'vue'
+import { Icon as IconFont } from 'tdesign-icons-vue-next'
+import { defineComponent, h } from 'vue'
+
+const Icon = defineComponent({
+  name: 'Icon',
+  inheritAttrs: false,
+  components: { IconFont },
+  props: {
+    url: {
+      type: String,
+      // 如果在iconfont.cn里新增了icon，记得更新下面的链接
+      default: 'https://at.alicdn.com/t/font_2343991_tnrt0d11ol9.js'
+    }
+  },
+  setup(props, { attrs }) {
+    return () =>
+      h(IconFont, {
+        ...attrs,
+        url: props.url,
+        loadDefaultIcons: false
+      })
+  }
+})
+
+export default {
+  install: (app: App) => {
+    app.component('Icon', Icon)
+  }
+}

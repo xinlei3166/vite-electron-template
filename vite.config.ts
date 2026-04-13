@@ -1,13 +1,12 @@
-import { loadEnv, defineConfig } from 'vite'
+import { TDesignResolver } from '@tdesign-vue-next/auto-import-resolver'
 import vue from '@vitejs/plugin-vue'
 import jsx from '@vitejs/plugin-vue-jsx'
+import path from 'path'
 import UnoCSS from 'unocss/vite'
-import { createStyleImportPlugin, AndDesignVueResolve } from 'vite-plugin-style-import'
-import { createHtmlPlugin } from 'vite-plugin-html'
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
-import { AntDesignVueResolver } from 'unplugin-vue-components/resolvers'
-import path from 'path'
+import { loadEnv, defineConfig } from 'vite'
+import { createHtmlPlugin } from 'vite-plugin-html'
 
 const root = path.resolve(__dirname, 'src/render')
 const publicDir = path.resolve(__dirname, 'src/render/public')
@@ -30,13 +29,13 @@ export default ({ mode, command }) => {
     },
     css: {
       preprocessorOptions: {
-        less: {
-          javascriptEnabled: true,
-          modifyVars: {
-            // 'primary-color': '#0077FA'
-          },
-          additionalData: `@import "./src/render/styles/index.less";`
-        }
+        //   less: {
+        //     javascriptEnabled: true,
+        //     modifyVars: {
+        //       'primary-color': '#0077FA'
+        //     },
+        //     additionalData: `@import "./src/render/styles/index.less";`
+        //   }
       }
     },
     plugins: [
@@ -45,12 +44,17 @@ export default ({ mode, command }) => {
       UnoCSS(),
       AutoImport({
         imports: ['vue', 'vue-router'],
+        resolvers: [
+          TDesignResolver({
+            library: 'vue-next'
+          })
+        ],
         dts: false
       }),
       Components({
         resolvers: [
-          AntDesignVueResolver({
-            importStyle: false // css in js
+          TDesignResolver({
+            library: 'vue-next'
           })
         ]
       }),
@@ -61,9 +65,6 @@ export default ({ mode, command }) => {
             // injectScript: `<script src="./inject.js"></script>`
           }
         }
-      }),
-      createStyleImportPlugin({
-        resolves: [AndDesignVueResolve()]
       })
     ],
     root,

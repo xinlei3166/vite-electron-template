@@ -1,4 +1,3 @@
-import type { UploadFile } from 'ant-design-vue'
 import { is } from './is'
 
 export function base64ToURL(base64String: string, type = 'application/pdf;chartset=UTF-8') {
@@ -41,7 +40,7 @@ export function openFile(base64String: string, type = 'application/pdf;chartset=
   }
 }
 
-export function hasFileType(file: UploadFile, type: string | string[]): boolean {
+export function hasFileType(file: any, type: string | string[]): boolean {
   // @ts-ignore
   const mime = file.name.split('.').pop().toLowerCase()
   if (is(type, 'Array')) {
@@ -53,7 +52,7 @@ export function hasFileType(file: UploadFile, type: string | string[]): boolean 
   }
 }
 
-export function hasExcelFile(file: UploadFile): boolean {
+export function hasExcelFile(file: any): boolean {
   const mimes = [
     'xlsx',
     'xlsm',

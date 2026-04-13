@@ -1,9 +1,12 @@
+import { createPinia } from 'pinia'
+import persistedState from 'pinia-plugin-persistedstate'
 import { createApp } from 'vue'
 import App from './App.vue'
+import plugins from './plugins'
 import router from './router'
-import { createPinia } from 'pinia'
-import piniaPersist from 'pinia-plugin-persist'
+import 'tdesign-vue-next/es/style/index.css'
 import './styles/index.less'
+import './styles/reset.less'
 import 'animate.css'
 import 'virtual:uno.css'
 
@@ -11,8 +14,9 @@ const app = createApp(App)
 
 app.use(router)
 const pinia = createPinia()
-pinia.use(piniaPersist)
+pinia.use(persistedState)
 app.use(pinia)
+app.use(plugins)
 
 app.mount('#app')
 

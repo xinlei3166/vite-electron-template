@@ -1,4 +1,4 @@
-import { message } from 'ant-design-vue'
+import { MessagePlugin } from 'tdesign-vue-next'
 import type { Request } from '@/types'
 import { useRequests } from '@/lib'
 import router from '@/router'
@@ -6,8 +6,8 @@ import { removeToken } from '@/utils'
 
 const errorHandler = (msg: string) => {
   removeToken()
-  message.destroy()
-  message.error(msg)
+  MessagePlugin.closeAll()
+  MessagePlugin.error(msg)
   setTimeout(() => {
     router.push('/login')
   }, 50)
