@@ -9,7 +9,7 @@ import './styles/index.less'
 import './styles/reset.less'
 import 'animate.css'
 import 'virtual:uno.css'
-
+console.log(import.meta.env)
 const app = createApp(App)
 
 app.use(router)

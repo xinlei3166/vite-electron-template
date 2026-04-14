@@ -6,7 +6,6 @@ import UnoCSS from 'unocss/vite'
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import { loadEnv, defineConfig } from 'vite'
-import { createHtmlPlugin } from 'vite-plugin-html'
 
 const root = path.resolve(__dirname, 'src/render')
 const publicDir = path.resolve(__dirname, 'src/render/public')
@@ -14,8 +13,10 @@ const outDir = path.resolve(__dirname, 'dist/render')
 
 // @ts-ignore
 export default ({ mode, command }) => {
+  const isBuild = command === 'build'
   console.log('mode', mode)
-  const env = loadEnv(mode, process.cwd())
+  const envDir = path.resolve(__dirname)
+  const env = loadEnv(mode, envDir)
   console.log('env', env)
 
   return defineConfig({
@@ -23,18 +24,29 @@ export default ({ mode, command }) => {
       __APP_TITLE__: JSON.stringify(env.VITE_APP_TITLE),
       'process.env': {}
     },
+    envDir,
     build: {
       outDir: env.VITE_OUTDIR || outDir,
-      emptyOutDir: true
+      emptyOutDir: true,
+      rolldownOptions: {
+        output: {
+          minify: {
+            compress: {
+              dropConsole: isBuild,
+              dropDebugger: isBuild
+            }
+          }
+        }
+      }
     },
     css: {
       preprocessorOptions: {
         //   less: {
         //     javascriptEnabled: true,
         //     modifyVars: {
-        //       'primary-color': '#0077FA'
+        //       '@brand-color': '#0077FA'
         //     },
-        //     additionalData: `@import "./src/render/styles/index.less";`
+        //     additionalData: `@import "./src/render/styles/theme.less";`
         //   }
       }
     },
@@ -57,15 +69,22 @@ export default ({ mode, command }) => {
             library: 'vue-next'
           })
         ]
-      }),
-      createHtmlPlugin({
-        inject: {
-          data: {
-            // title: 'title',
-            // injectScript: `<script src="./inject.js"></script>`
-          }
-        }
       })
+      // {
+      //   name: 'html-transform',
+      //   transformIndexHtml(html) {
+      //     return {
+      //       html: html.replace('%title%', env.VITE_APP_TITLE),
+      //       tags: [
+      //         {
+      //           tag: 'script',
+      //           attrs: { src: './inject.js' },
+      //           injectTo: 'head'
+      //         }
+      //       ]
+      //     }
+      //   }
+      // }
     ],
     root,
     base: './',
@@ -75,9 +94,6 @@ export default ({ mode, command }) => {
         '@': root
       },
       extensions: ['.js', '.jsx', '.ts', '.tsx', '.mjs', '.vue', '.json', '.less', '.scss', '.css']
-    },
-    esbuild: {
-      drop: command === 'build' ? ['console', 'debugger'] : []
     },
     server: {
       proxy: {
