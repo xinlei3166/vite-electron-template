@@ -4,7 +4,7 @@ vite-electron-template
 
 ## Framework packages
 
-Vite4 + Vue3 + Electron24 + Pinia + Vue Router + TypeScript + Ant Design Vue + Unocss
+Vite + Vue + Electron + Pinia + Vue Router + TypeScript + TDesign Vue + Unocss
 
 ## Package Manager
 
