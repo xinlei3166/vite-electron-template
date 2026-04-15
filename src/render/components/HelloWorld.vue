@@ -1,6 +1,6 @@
 <template>
   <router-view />
-  <h1>{{ msg }}</h1>
+  <h1 class="text-brand">{{ msg }}</h1>
 
   <p>
     Recommended IDE setup:
@@ -34,6 +34,7 @@
     <code>components/HelloWorld.vue</code>
     to test hot module replacement.
   </p>
+  <p class="electron">electron</p>
 </template>
 
 <script lang="ts">
@@ -68,5 +69,9 @@ code {
   padding: 2px 4px;
   border-radius: 4px;
   color: #304455;
+}
+
+.electron {
+  color: theme('colors.brand');
 }
 </style>

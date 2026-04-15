@@ -8,8 +8,9 @@
     "esModuleInterop": true,
     "allowJs": true,
     "noImplicitAny": true,
+    "ignoreDeprecations": "6.0",
+    "rootDir": "src/main",
     "outDir": "dist/main"
   },
-  "include": ["src/main/preload.js", "src/main/**/*.ts", "src/main/**/*.d.ts"],
-  "exclude": ["node_modules"]
+  "include": ["src/main/preload.js", "src/main/**/*.ts", "src/main/**/*.d.ts"]
 }

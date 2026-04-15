@@ -22,35 +22,17 @@ git clone https://github.com/xinlei3166/vite-electron-template
 pnpm install
 ```
 
-### Install electron
-
-```
-pnpm config set electron_mirror https://npm.taobao.org/mirrors/electron/
-pnpm install -D electron
-```
-
-### Compiles and hot-reloads for development
+## dev
 
 ```
 pnpm dev
 pnpm dev:electron
 ```
 
-### Compiles and minifies for production
+## build
 
 ```
+pnpm build
 pnpm build:win
 pnpm build:mac
-```
-
-### Run your tests
-
-```
-pnpm run test
-```
-
-### Lints and fixes files
-
-```
-pnpm run lint
 ```

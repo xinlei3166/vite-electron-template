@@ -18,6 +18,11 @@
       "@/*": ["src/render/*"]
     }
   },
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue", "uno.config.ts"],
+  "include": [
+    "src/render/**/*.ts",
+    "src/render/**/*.d.ts",
+    "src/render/**/*.tsx",
+    "src/render/**/*.vue"
+  ],
   "exclude": ["node_modules"]
 }

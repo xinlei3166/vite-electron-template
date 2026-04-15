@@ -26,7 +26,7 @@ export default ({ mode, command }) => {
     },
     envDir,
     build: {
-      outDir: env.VITE_OUTDIR || outDir,
+      outDir,
       emptyOutDir: true,
       rolldownOptions: {
         output: {
