@@ -10,7 +10,7 @@ const Icon = defineComponent({
     url: {
       type: String,
       // 如果在iconfont.cn里新增了icon，记得更新下面的链接
-      default: 'https://at.alicdn.com/t/font_2343991_tnrt0d11ol9.js'
+      default: `${import.meta.env.VITE_APP_BASE || '/'}iconfont.js`
     }
   },
   setup(props, { attrs }) {
