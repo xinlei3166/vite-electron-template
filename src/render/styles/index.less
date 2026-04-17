@@ -1,6 +1,30 @@
 @import './theme';
 @import './tdesign';
 
+// scrollbar
+// ::-webkit-scrollbar {
+//   width: 6px;
+//   height: 6px;
+// }
+// ::-webkit-scrollbar-thumb {
+//   border: 0px solid transparent;
+//   background-clip: content-box;
+//   background-color: var(--td-scrollbar-color);
+//   border-radius: 11px;
+// }
+// ::-webkit-scrollbar-thumb:hover {
+//   background-color: var(--td-scrollbar-hover-color);
+// }
+
+// iconfont-icon
+.iconfont-icon {
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.15em;
+  fill: currentColor;
+  overflow: hidden;
+}
+
 // required
 .label-required::before {
   content: '*';
@@ -37,23 +61,6 @@
   vertical-align: baseline;
 }
 
-// card
-.my-card {
-  display: flex;
-  background: #fff;
-  border-radius: 4px;
-  font-size: 14px;
-  transition: all 0.2s ease-in-out;
-}
-
-// readonly-text
-.readonly-text {
-  .t-input.t-is-disabled {
-    cursor: default;
-    color: theme('colors.textPrimary');
-  }
-}
-
 // nprogress style
 #nprogress .bar {
   background: theme('colors.brand');
@@ -63,6 +70,7 @@
 .text-btn-success {
   cursor: pointer;
   color: theme('colors.success');
+
   &:hover {
     color: theme('colors.successHover');
   }
@@ -71,6 +79,7 @@
 .text-btn-error {
   cursor: pointer;
   color: theme('colors.error');
+
   &:hover {
     color: theme('colors.errorHover');
   }
@@ -78,7 +87,7 @@
 
 .text-btn-disabled {
   cursor: not-allowed;
-  color: theme('colors.textDisabled');
+  color: theme('colors.textSecondary');
 }
 
 .text-btn,
@@ -111,7 +120,7 @@
 }
 
 // card
-.flex-card {
+.my-card {
   display: flex;
   background: #fff;
   border-radius: 4px;
@@ -120,11 +129,11 @@
 }
 
 // tree
-.tree-flex-card {
+.tree-card {
   height: calc(100vh - 64px - 32px);
 }
 .tree-left {
-  border-right: 1px solid theme('colors.borderLevel1');
+  border-right: 1px solid theme('colors.borderLevel2');
 }
 .tree-right {
   display: flex;
@@ -145,7 +154,7 @@
   .tree-row-desc {
     margin-left: 5px;
     flex-shrink: 0;
-    color: theme('colors.textPlaceholder');
+    color: rgba(0, 0, 0, 0.3);
   }
   .tree-row-btn-group {
     visibility: hidden;
@@ -153,7 +162,7 @@
   }
 }
 
-// my-status
+// status
 .my-status-success {
   color: theme('colors.success');
 }
