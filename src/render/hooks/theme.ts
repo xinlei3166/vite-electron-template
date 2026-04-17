@@ -4,27 +4,27 @@ import { ref } from 'vue'
 export interface Theme {
   theme: 'dark' | 'light'
   layout: 'side' | 'mix'
-  mode: 'vertical' | 'inline' | 'horizontal'
+  mode: 'normal' | 'popup'
   width: string
   height: string
   collapsed: boolean
   collapsedWidth: string
   headerTheme: boolean
   showBreadcrumb: boolean
-  brandTheme: string
+  themeColor: string
 }
 
 const theme = ref<Theme>({
   theme: 'light', // light, dark
   layout: 'mix', // side, mix
-  mode: 'inline',
+  mode: 'normal',
   width: '240px',
   height: '64px',
   collapsed: false,
-  collapsedWidth: '80px',
+  collapsedWidth: '64px',
   headerTheme: false,
-  showBreadcrumb: true, // 是否显示面包屑
-  brandTheme: '#0077fa'
+  showBreadcrumb: false, // 是否显示面包屑
+  themeColor: '#0077fa'
 })
 
 export const useTheme = function (): Ref<Theme> {
