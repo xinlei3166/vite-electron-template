@@ -4,7 +4,7 @@ import { ref } from 'vue'
 export interface Theme {
   theme: 'dark' | 'light'
   layout: 'side' | 'mix'
-  mode: 'normal' | 'popup'
+  expandType: 'normal' | 'popup'
   width: string
   height: string
   collapsed: boolean
@@ -17,7 +17,7 @@ export interface Theme {
 const theme = ref<Theme>({
   theme: 'light', // light, dark
   layout: 'mix', // side, mix
-  mode: 'normal',
+  expandType: 'normal',
   width: '240px',
   height: '56px',
   collapsed: false,
