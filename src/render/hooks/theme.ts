@@ -19,7 +19,7 @@ const theme = ref<Theme>({
   layout: 'mix', // side, mix
   mode: 'normal',
   width: '240px',
-  height: '64px',
+  height: '56px',
   collapsed: false,
   collapsedWidth: '64px',
   headerTheme: false,
