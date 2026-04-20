@@ -17,6 +17,7 @@ const Icon = defineComponent({
     return () =>
       h(IconFont, {
         ...attrs,
+        class: ['iconfont-icon', attrs.class],
         url: props.url,
         loadDefaultIcons: false
       })
