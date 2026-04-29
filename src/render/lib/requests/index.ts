@@ -3,18 +3,20 @@ import { MessagePlugin } from 'tdesign-vue-next'
 import type { Config, RequestsConfig, Method } from '@/types'
 import { ContentTypeEnum } from '@/types/enums'
 import { getToken, writeFile, writeBase64File } from '@/utils'
-// import { useTokenRefresh } from './useTokenRefresh'
+import { useTokenRefresh } from './useTokenRefresh'
+import { parseBlobError } from './utils'
 
 const createRequests = (requestsConfig: RequestsConfig = {}) => {
   const baseURL = requestsConfig.baseURL || import.meta.env.VITE_API_URL
   const authorizationKey = requestsConfig.authorizationKey || 'Authorization'
-  const errorCodes = requestsConfig.errorCodes || [20004, 20010]
+  // 20004: 登录超时, 20010: token错误, 20012: token版本错误, 20102: 用户已禁用
+  const errorCodes = requestsConfig.errorCodes || [20004, 20010, 20012, 20102]
   const codeKey = requestsConfig.codeKey || 'code'
   const messageKey = requestsConfig.messageKey || 'msg'
   const successCode = requestsConfig.successCode || 0
   const errorHandler = requestsConfig.errorHandler
-  // const noRefreshToken = requestsConfig.noRefreshToken
-  // const refreshTokenApi = requestsConfig.refreshTokenApi
+  const noRefreshToken = requestsConfig.noRefreshToken
+  const refreshTokenApi = requestsConfig.refreshTokenApi
 
   const service = axios.create({
     baseURL,
@@ -32,12 +34,12 @@ const createRequests = (requestsConfig: RequestsConfig = {}) => {
     }
   } as Config)
 
-  // const { handleRefreshed } = useTokenRefresh({
-  //   authorizationKey,
-  //   successCode,
-  //   errorHandler,
-  //   refreshTokenApi
-  // })
+  const { handleRefreshed } = useTokenRefresh({
+    authorizationKey,
+    successCode,
+    errorHandler,
+    refreshTokenApi
+  })
 
   // request 拦截器
   service.interceptors.request.use(
@@ -57,19 +59,30 @@ const createRequests = (requestsConfig: RequestsConfig = {}) => {
 
   // response 拦截器
   service.interceptors.response.use(
-    (response: any) => {
-      const { responseType } = response?.config?.requestOptions || {}
+    async (response: any) => {
+      const { responseType, useHeaderFileName } = response?.config?.requestOptions || {}
       if (responseType === 'raw') return response
-      if (responseType === 'blob') return response.data
+      if (responseType === 'blob') {
+        const contentType = response.headers?.['content-type'] || response.data.type
+        if (contentType.includes('application/json')) {
+          const blobError = await parseBlobError(response.data, messageKey)
+          MessagePlugin.error(blobError.message || '下载失败')
+          return
+        }
+        if (useHeaderFileName) {
+          return response
+        }
+        return response.data
+      }
       const { [codeKey]: code, [messageKey]: msg } = response?.data || {}
       if (code && errorCodes.includes(code)) {
         errorHandler?.(msg)
         return response.data
       }
       // token过期，需要续期
-      // if (code && code === 20011 && !noRefreshToken) {
-      //   return handleRefreshed(service, response.config)
-      // }
+      if (code && code === 20011 && !noRefreshToken) {
+        return handleRefreshed(service, response.config)
+      }
       if (code && code !== successCode) {
         MessagePlugin.closeAll()
         MessagePlugin.error(msg)
@@ -132,20 +145,42 @@ const createRequests = (requestsConfig: RequestsConfig = {}) => {
     } else {
       api = service[method](url, data, config)
     }
-    const { fileName, responseType, stringify, cb, blobOptions } = config.requestOptions || {}
+    const { fileName, responseType, stringify, cb, blobOptions, useHeaderFileName } =
+      config.requestOptions || {}
+    let headerFileName = ''
     return api
       .then(async (res: any) => {
         cb?.(res)
         let data
         if (responseType === 'blob') {
-          data = res
+          if (!res) return false
+          if (useHeaderFileName) {
+            data = res.data
+            // 从response的headers中获取filename, "Content-disposition", "attachment; filename=xxxx.docx"
+            // 1.获取 Header，注意大小写兼容
+            const contentDisposition =
+              res.headers['content-disposition'] || res.headers['Content-Disposition']
+            if (contentDisposition) {
+              // 2.匹配 filename 或 filename*
+              const fileNameMatch = contentDisposition.match(
+                /filename\*?=['"]?(?:UTF-8'')?([^;'\n]*)['"]?/i
+              )
+              if (fileNameMatch && fileNameMatch[1]) {
+                // 3.解码
+                headerFileName = decodeURIComponent(fileNameMatch[1])
+              }
+            }
+            console.log('headerFileName:', headerFileName)
+          } else {
+            data = res
+          }
         } else {
           const { code, data: _data } = res
           if (code && code !== successCode) return
           data = stringify ? JSON.stringify(_data) : _data
         }
         const write = responseType === 'base64' ? writeBase64File : writeFile
-        await write(fileName as string, data, blobOptions)
+        await write(headerFileName || (fileName as string), data, blobOptions)
         return true
       })
       .catch(e => console.log(e))

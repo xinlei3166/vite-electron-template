@@ -1,8 +1,15 @@
 import Cookies from 'js-cookie'
+import { MessagePlugin } from 'tdesign-vue-next'
+// @ts-ignore
+import { useMenuStore } from '@/store/menu'
+// @ts-ignore
+// import router from '@/router'
+// @ts-ignore
+import { useUserStore } from '@/store/user'
 
 const storageKeyPrefix = import.meta.env.VITE_APP_STORAGE_KEY_PREFIX
-export const TokenKey = `${storageKeyPrefix}Token`
 
+export const TokenKey = `${storageKeyPrefix}Token`
 export const setToken = (token: string) => Cookies.set(TokenKey, token) // { expires: 1 }
 export const getToken = () => Cookies.get(TokenKey)
 export const removeToken = () => {
@@ -30,4 +37,28 @@ export const getLocalValue = (key: string, parse = false) => {
 }
 export const removeLocalValue = (key: string) => {
   return localStorage.removeItem(`${storageKeyPrefix}${key}`)
+}
+
+// logout
+interface LogoutCleanupOptions {
+  msg?: string
+  destroy?: boolean
+}
+export const logoutCleanup = ({ msg, destroy = false }: LogoutCleanupOptions = {}) => {
+  const userStore = useUserStore()
+  const menuStore = useMenuStore()
+  removeToken()
+  userStore.cleanup()
+  menuStore.cleanup()
+
+  if (destroy) {
+    MessagePlugin.closeAll()
+  }
+  if (msg) {
+    MessagePlugin.error(msg)
+  }
+
+  // setTimeout(() => {
+  //   router.push('/login')
+  // }, 50)
 }

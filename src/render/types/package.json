@@ -1,0 +1,9 @@
+{
+  "name": "@packages/types",
+  "version": "1.0.0",
+  "description": "@packages/types",
+  "keywords": [],
+  "license": "MIT",
+  "author": "君惜",
+  "main": "index.ts"
+}
