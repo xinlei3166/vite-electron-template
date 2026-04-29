@@ -63,7 +63,7 @@ const createRequests = (requestsConfig: RequestsConfig = {}) => {
       const { responseType, useHeaderFileName } = response?.config?.requestOptions || {}
       if (responseType === 'raw') return response
       if (responseType === 'blob') {
-        const contentType = response.headers?.['content-type'] || response.data.type
+        const contentType = response.headers?.['content-type']
         if (contentType.includes('application/json')) {
           const blobError = await parseBlobError(response.data, messageKey)
           MessagePlugin.error(blobError.message || '下载失败')
