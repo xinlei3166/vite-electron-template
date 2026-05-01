@@ -32,6 +32,7 @@
     "@ant-design/colors": "^8.0.1",
     "@vueuse/components": "^14.2.1",
     "@vueuse/core": "^14.2.1",
+    "ali-oss": "^6.23.0",
     "animate.css": "^4.1.1",
     "axios": "^1.15.0",
     "cos-js-sdk-v5": "^1.10.1",
