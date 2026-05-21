@@ -7,7 +7,6 @@ import router from './router'
 import 'tdesign-vue-next/es/style/index.css'
 import './styles/index.less'
 import './styles/reset.less'
-import 'animate.css'
 import 'virtual:uno.css'
 
 const app = createApp(App)

@@ -1,0 +1,9 @@
+peerDependencyRules:
+  ignoreMissing: []
+allowBuilds:
+  core-js-pure: true
+  cos-js-sdk-v5: true
+  electron: true
+  electron-winstaller: true
+  esbuild: true
+  simple-git-hooks: true
