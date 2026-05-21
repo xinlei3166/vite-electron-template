@@ -6,6 +6,7 @@ import UnoCSS from 'unocss/vite'
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import { loadEnv, defineConfig } from 'vite'
+import vueDevTools from 'vite-plugin-vue-devtools'
 
 const root = path.resolve(__dirname, 'src/render')
 const publicDir = path.resolve(__dirname, 'src/render/public')
@@ -53,6 +54,7 @@ export default ({ mode, command }) => {
     plugins: [
       vue(),
       jsx(),
+      vueDevTools(),
       UnoCSS(),
       AutoImport({
         imports: ['vue', 'vue-router'],
