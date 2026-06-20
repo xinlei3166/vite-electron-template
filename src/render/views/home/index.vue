@@ -1,5 +1,5 @@
 <template>
-  <img alt="Vue logo" src="@/assets/logo.png" />
+  <img alt="Vue logo" src="@/assets/logo.png" style="display: inline-block" />
 </template>
 
 <script setup lang="ts"></script>
