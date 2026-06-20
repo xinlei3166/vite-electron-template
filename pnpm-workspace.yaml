@@ -1,5 +1,11 @@
 peerDependencyRules:
   ignoreMissing: []
+  allowAny:
+    - vite
+    - vitest
+  allowedVersions:
+    vite: '*'
+    vitest: '*'
 allowBuilds:
   core-js-pure: true
   cos-js-sdk-v5: true
@@ -7,3 +13,10 @@ allowBuilds:
   electron-winstaller: true
   esbuild: true
   simple-git-hooks: true
+catalog:
+  vite: npm:@voidzero-dev/vite-plus-core@latest
+  vitest: 4.1.9
+  vite-plus: latest
+overrides:
+  vite: 'catalog:'
+  vitest: 'catalog:'

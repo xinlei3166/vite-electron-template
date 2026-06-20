@@ -3,19 +3,19 @@
     "target": "esnext",
     "module": "esnext",
     "moduleResolution": "bundler",
+    "noEmit": true,
     "strict": true,
     "jsx": "preserve",
     "sourceMap": true,
     "resolveJsonModule": true,
     "esModuleInterop": true,
+    "allowImportingTsExtensions": true,
     "allowJs": true,
     "noImplicitAny": true,
     "lib": ["esnext", "dom"],
-    "types": ["vite/client", "node"],
-    "ignoreDeprecations": "6.0",
-    "baseUrl": ".",
+    "types": ["vite-plus/client", "node"],
     "paths": {
-      "@/*": ["src/render/*"]
+      "@/*": ["./src/render/*"]
     }
   },
   "include": [

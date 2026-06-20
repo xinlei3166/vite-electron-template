@@ -5,8 +5,8 @@ import path from 'path'
 import UnoCSS from 'unocss/vite'
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
-import { loadEnv, defineConfig } from 'vite'
 import vueDevTools from 'vite-plugin-vue-devtools'
+import { loadEnv, defineConfig, lazyPlugins } from 'vite-plus'
 
 const root = path.resolve(__dirname, 'src/render')
 const publicDir = path.resolve(__dirname, 'src/render/public')
@@ -21,6 +21,82 @@ export default ({ mode, command }) => {
   console.log('env', env)
 
   return defineConfig({
+    fmt: {
+      printWidth: 100,
+      semi: false,
+      singleQuote: true,
+      proseWrap: 'never',
+      arrowParens: 'avoid',
+      bracketSpacing: true,
+      htmlWhitespaceSensitivity: 'ignore',
+      jsxBracketSameLine: false,
+      jsxSingleQuote: false,
+      trailingComma: 'none',
+      vueIndentScriptAndStyle: false,
+      embeddedLanguageFormatting: 'auto',
+      sortPackageJson: true,
+      sortImports: {
+        newlinesBetween: false,
+        groups: [
+          'type-import',
+          ['value-builtin', 'value-external'],
+          'package-scoped',
+          'type-internal',
+          'value-internal',
+          ['type-parent', 'type-sibling', 'type-index'],
+          ['value-parent', 'value-sibling', 'value-index'],
+          'unknown'
+        ],
+        customGroups: [
+          {
+            groupName: 'package-scoped',
+            elementNamePattern: ['@packages/**']
+          }
+        ]
+      },
+      ignorePatterns: [
+        'dist',
+        'public',
+        'node_modules',
+        'iconfont.js',
+        'packages/docs/.vitepress/cache',
+        'components.d.ts'
+      ]
+    },
+    lint: {
+      plugins: ['typescript', 'vue'],
+      categories: {
+        correctness: 'warn'
+      },
+      env: {
+        builtin: true
+      },
+      rules: {
+        'no-var': 'error',
+        'prefer-const': 'warn',
+        eqeqeq: 'warn',
+        'no-unused-vars': 'warn',
+        'vite-plus/prefer-vite-plus-imports': 'error'
+      },
+      ignorePatterns: [
+        'dist',
+        'public',
+        'node_modules',
+        'iconfont.js',
+        'packages/docs/.vitepress/cache',
+        'components.d.ts'
+      ],
+      options: {
+        typeAware: true,
+        typeCheck: true
+      },
+      jsPlugins: [
+        {
+          name: 'vite-plus',
+          specifier: 'vite-plus/oxlint-plugin'
+        }
+      ]
+    },
     define: {
       __APP_TITLE__: JSON.stringify(env.VITE_APP_TITLE),
       'process.env': {}
@@ -51,7 +127,7 @@ export default ({ mode, command }) => {
         //   }
       }
     },
-    plugins: [
+    plugins: lazyPlugins(() => [
       vue(),
       jsx(),
       vueDevTools(),
@@ -87,7 +163,7 @@ export default ({ mode, command }) => {
       //     }
       //   }
       // }
-    ],
+    ]),
     root,
     base: './',
     publicDir,
